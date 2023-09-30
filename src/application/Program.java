@@ -13,6 +13,7 @@ public class Program {
 		
 		SellerDao sellerDao = DaoFactory.createSellerDao();
 		
+		System.out.println("==========\tTeste 1\t==========");
 		Seller seller = sellerDao.findById(3);
 		
 		System.out.println(seller);
