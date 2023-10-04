@@ -1,7 +1,6 @@
 package model.dao.impl;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import db.DB;
 import db.DbException;
@@ -68,14 +68,51 @@ public class SellerDaoJDBC implements SellerDao {
 
 	@Override
 	public void update(Seller obj) {
-		// TODO Auto-generated method stub
 		
+		PreparedStatement st = null;
+		
+		try {
+			st = conn.prepareStatement(
+					"Update seller "
+					+"Set name = ?, Email = ?, BirthDate = ?, BaseSalary = ?, DepartmentId = ? "
+					+"Where Id = ?");
+			
+			st.setString(1, obj.getName());
+			st.setString(2, obj.getEmail());
+			st.setDate(3, new java.sql.Date(obj.getBirthDate().getTime()));
+			st.setDouble(4, obj.getBaseSalary());
+			st.setInt(5, obj.getDepartement().getId());
+			st.setInt(6, obj.getId());
+			
+			st.execute();
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			 DB.closeStatement(st);
+		}
 	}
 
 	@Override
 	public void deleteById(Integer id) {
-		// TODO Auto-generated method stub
 		
+		PreparedStatement st =  null;
+		try {
+			st = conn.prepareStatement("Delete From seller Where Id = ?");
+			
+			st.setInt(1, id);
+			
+			int rows = st.executeUpdate();
+			if(rows == 0) {
+				throw new DbException("ID informado não possuiu referecia na base ");
+			}
+		} catch (SQLException e) {
+			 throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
 	}
 
 	@Override
