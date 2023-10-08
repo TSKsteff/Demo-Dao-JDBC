@@ -9,7 +9,7 @@ import model.dao.SellerDao;
 import model.entities.Department;
 import model.entities.Seller;
 
-public class Program {
+public class SellerMain {
 
 	public static void main(String[] args) {
 		
@@ -45,12 +45,12 @@ public class Program {
 		
 		System.out.println("========\tTeste 5: seller update\t=======");
 		 seller = sellerDao.findById(3);
-		sellerDao.insert(newSeller);
+		//sellerDao.insert(newSeller);
 		seller.setName("Mathias Weine");
 		sellerDao.update(seller);
 		System.out.println("update completed");
 	
-		System.out.println("========\tTeste 5: seller update\t=======");
+		System.out.println("========\tTeste 5: Delete update\t=======");
 		System.out.println("Enter id for delete test:  ");
 		int id = sc.nextInt();
 		sellerDao.deleteById(id);
